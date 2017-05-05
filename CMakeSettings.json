@@ -10,7 +10,7 @@
           "variables": [
             {
               "name": "PROTOBUF_ROOT_FOLDER",
-              "value": "${workspaceRoot}\\protobuf"
+              "value": "${workspaceRoot}\\external\\protobuf"
             },
             {
               "name": "CMAKE_FIND_DEBUG_MODE",
@@ -28,7 +28,7 @@
           "variables": [
             {
               "name": "PROTOBUF_ROOT_FOLDER",
-              "value": "${workspaceRoot}\\protobuf"
+              "value": "${workspaceRoot}\\external\\protobuf"
             },
             {
               "name": "CMAKE_FIND_DEBUG_MODE",
@@ -46,7 +46,7 @@
           "variables": [
             {
               "name": "PROTOBUF_ROOT_FOLDER",
-              "value": "${workspaceRoot}\\protobuf"
+              "value": "${workspaceRoot}\\external\\protobuf"
             },
             {
               "name": "CMAKE_FIND_DEBUG_MODE",
@@ -64,7 +64,7 @@
           "variables": [
             {
               "name": "PROTOBUF_ROOT_FOLDER",
-              "value": "${workspaceRoot}\\protobuf"
+              "value": "${workspaceRoot}\\external\\protobuf"
             },
             {
               "name": "CMAKE_FIND_DEBUG_MODE",

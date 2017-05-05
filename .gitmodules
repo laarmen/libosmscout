@@ -1,0 +1,6 @@
+[submodule "external/protobuf"]
+	path = external/protobuf
+	url = git://github.com/google/protobuf
+[submodule "external/zlib"]
+	path = external/zlib
+	url = git://github.com/winlibs/zlib

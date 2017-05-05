@@ -216,26 +216,11 @@ endif()
 function(_protobuf_find_libraries name filename)
    find_library(${name}_LIBRARY
        NAMES ${filename}
-       PATHS ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Release)
+       PATHS ${PROTOBUF_ROOT_FOLDER}/lib)
    mark_as_advanced(${name}_LIBRARY)
 
-   find_library(${name}_LIBRARY_DEBUG
-       NAMES ${filename}
-       PATHS ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Debug)
-   mark_as_advanced(${name}_LIBRARY_DEBUG)
-
-   if(NOT ${name}_LIBRARY_DEBUG)
-      # There is no debug library
-      set(${name}_LIBRARY_DEBUG ${${name}_LIBRARY} PARENT_SCOPE)
-      set(${name}_LIBRARIES     ${${name}_LIBRARY} PARENT_SCOPE)
-   else()
-      # There IS a debug library
-      set(${name}_LIBRARIES
-          optimized ${${name}_LIBRARY}
-          debug     ${${name}_LIBRARY_DEBUG}
-          PARENT_SCOPE
-      )
-   endif()
+  set(${name}_LIBRARY_DEBUG ${${name}_LIBRARY} PARENT_SCOPE)
+  set(${name}_LIBRARIES     ${${name}_LIBRARY} PARENT_SCOPE)
 endfunction()
 
 # Internal function: find threads library
@@ -265,7 +250,7 @@ if(MSVC)
     set(PROTOBUF_ORIG_FIND_LIBRARY_PREFIXES "${CMAKE_FIND_LIBRARY_PREFIXES}")
     set(CMAKE_FIND_LIBRARY_PREFIXES "lib" "")
 
-    find_path(PROTOBUF_SRC_ROOT_FOLDER protobuf.pc.in)
+    # find_path(PROTOBUF_ROOT_FOLDER protobuf.pc.in)
 endif()
 
 # The Protobuf library
@@ -289,7 +274,7 @@ endif()
 # Find the include directory
 find_path(PROTOBUF_INCLUDE_DIR
     google/protobuf/service.h
-    PATHS ${PROTOBUF_SRC_ROOT_FOLDER}/src
+    PATHS ${PROTOBUF_ROOT_FOLDER}/include
 )
 mark_as_advanced(PROTOBUF_INCLUDE_DIR)
 
@@ -298,8 +283,7 @@ find_program(PROTOBUF_PROTOC_EXECUTABLE
     NAMES protoc
     DOC "The Google Protocol Buffers Compiler"
     PATHS
-    ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Release
-    ${PROTOBUF_SRC_ROOT_FOLDER}/vsprojects/${_PROTOBUF_ARCH_DIR}Debug
+    ${PROTOBUF_ROOT_FOLDER}/bin
 )
 mark_as_advanced(PROTOBUF_PROTOC_EXECUTABLE)
 
