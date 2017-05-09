@@ -88,10 +88,10 @@ check_function_exists(posix_madvise HAVE_POSIX_MADVISE)
 check_function_exists(mallinfo HAVE_MALLINFO)
 
 # check libraries and tools
-find_package(Marisa QUIET)
+find_package(Marisa)
 find_package(LibXml2 QUIET)
-find_package(MyProtobuf QUIET) # Modified FindProtobuf
-find_package(ZLIB QUIET)
+find_package(MyProtobuf) # Modified FindProtobuf
+find_package(ZLIB)
 find_package(iconv QUIET)
 find_package(LibLZMA QUIET)
 find_package(PNG QUIET)

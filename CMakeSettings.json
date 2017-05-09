@@ -9,6 +9,10 @@
       "cmakeCommandArgs": "",
       "variables": [
         {
+          "name": "MARISA_ROOT_FOLDER",
+          "value": "${workspaceRoot}\\..\\libosmscout_deps\\libmarisa"
+        },
+        {
           "name": "PROTOBUF_ROOT_FOLDER",
           "value": "${workspaceRoot}\\..\\libosmscout_deps\\protobuf"
         },
@@ -30,6 +34,10 @@
       "buildRoot": "${env.LOCALAPPDATA}\\CMakeBuild\\${workspaceHash}\\build\\${name}",
       "cmakeCommandArgs": "",
       "variables": [
+        {
+          "name": "MARISA_ROOT_FOLDER",
+          "value": "${workspaceRoot}\\..\\libosmscout_deps\\libmarisa"
+        },
         {
           "name": "PROTOBUF_ROOT_FOLDER",
           "value": "${workspaceRoot}\\..\\libosmscout_deps\\protobuf"
@@ -53,6 +61,10 @@
       "cmakeCommandArgs": "",
       "variables": [
         {
+          "name": "MARISA_ROOT_FOLDER",
+          "value": "${workspaceRoot}\\..\\libosmscout_deps\\libmarisa"
+        },
+        {
           "name": "PROTOBUF_ROOT_FOLDER",
           "value": "${workspaceRoot}\\..\\libosmscout_deps\\protobuf"
         },
@@ -74,6 +86,10 @@
       "buildRoot": "${env.LOCALAPPDATA}\\CMakeBuild\\${workspaceHash}\\build\\${name}",
       "cmakeCommandArgs": "",
       "variables": [
+        {
+          "name": "MARISA_ROOT_FOLDER",
+          "value": "${workspaceRoot}\\..\\libosmscout_deps\\libmarisa"
+        },
         {
           "name": "PROTOBUF_ROOT_FOLDER",
           "value": "${workspaceRoot}\\..\\libosmscout_deps\\protobuf"
