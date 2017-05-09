@@ -172,6 +172,16 @@ if(${OSMSCOUT_BUILD_MAP_DIRECTX})
 		${Direct2D_INCLUDE_DIRS})
 	target_link_libraries(DrawMapDirectX osmscout osmscout_map osmscout_map_directx ${Direct2D_LIBRARIES} "Shell32.lib")
 	install(TARGETS DrawMapDirectX RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+
+    add_executable(TilerDX src/TilerDX.cpp)
+    set_property(TARGET TilerDX PROPERTY CXX_STANDARD 11)
+	target_include_directories(TilerDX PRIVATE ${OSMSCOUT_BASE_DIR_SOURCE}/libosmscout/include
+		${OSMSCOUT_BASE_DIR_SOURCE}/libosmscout-map/include
+		${OSMSCOUT_BASE_DIR_SOURCE}/libosmscout-map-directx/include
+		${CMAKE_CURRENT_BINARY_DIR}/include/DrawMapDirectX
+		${Direct2D_INCLUDE_DIRS})
+    target_link_libraries(TilerDX osmscout osmscout_map osmscout_map_directx)
+    install(TARGETS TilerDX RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
 else()
 	message("Skip DrawMapDirectX demo, libosmscout-map-directx is missing.")
 endif()
