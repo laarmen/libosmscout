@@ -1,6 +1,3 @@
-if(NOT LIBXML2_FOUND)
-	message(SEND_ERROR "libxml2 is required for import library")
-endif()
 if(NOT PROTOBUF_FOUND)
 	message(SEND_ERROR "protobuf is required for import library")
 endif()
@@ -109,6 +106,11 @@ if(MARISA_FOUND)
     list(APPEND SOURCE_FILES src/osmscout/import/GenTextIndex.cpp)
 endif()
 
+if(LIBXML2_FOUND)
+    list(APPEND HEADER_FILES include/osmscout/import/PreprocessOSM.h)
+    list(APPEND SOURCE_FILES src/osmscout/import/PreprocessOSM.cpp)
+endif()
+
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${CMAKE_CURRENT_SOURCE_DIR}/include/osmscout/import/pbf src/protobuf/fileformat.proto src/protobuf/osmformat.proto)
 
 add_library(osmscout_import ${SOURCE_FILES} ${HEADER_FILES} ${PROTO_SRCS} ${PROTO_HDRS})
@@ -121,7 +123,6 @@ target_include_directories(osmscout_import PRIVATE
 		${CMAKE_CURRENT_BINARY_DIR}/include
 		${OSMSCOUT_BASE_DIR_SOURCE}/libosmscout/include
 		${ZLIB_INCLUDE_DIRS}
-		${LIBXML2_INCLUDE_DIR}
 		${PROTOBUF_INCLUDE_DIRS})
 target_link_libraries(osmscout_import
 		osmscout
@@ -136,19 +137,16 @@ if (LIBLZMA_FOUND AND ICONV_FOUND)
                )
 elseif (ICONV_FOUND)
   target_link_libraries(osmscout_import
-    ${LIBXML2_LIBRARIES}
     ${ZLIB_LIBRARIES}
     ${ICONV_LIBRARIES}
     )
 elseif (LIBLZMA_FOUND)
   target_link_libraries(osmscout_import
-    ${LIBXML2_LIBRARIES}
     ${ZLIB_LIBRARIES}
     ${LIBLZMA_LIBRARIES}
     )    
 else()
   target_link_libraries(osmscout_import
-    ${LIBXML2_LIBRARIES}
     ${ZLIB_LIBRARIES}
     )    
 endif()
@@ -157,11 +155,21 @@ if(MARISA_FOUND)
     target_include_directories(osmscout_import PRIVATE ${MARISA_INCLUDE_DIRS})
     target_link_libraries(osmscout_import ${MARISA_LIBRARIES})
 endif()
+
+if(LIBXML2_FOUND)
+    target_include_directories(osmscout_import PRIVATE ${LIBXML2_INCLUDE_DIR})
+    target_link_libraries(osmscout_import ${LIBXML2_LIBRARIES})
+endif()
 if(WIN32)
   target_link_libraries(osmscout_import Ws2_32.lib)
   target_compile_definitions(osmscout_import PRIVATE -DPROTOBUF_USE_DLLS)
 endif()
-target_compile_definitions(osmscout_import PRIVATE -DOSMSCOUT_IMPORT_EXPORT_SYMBOLS ${LIBXML2_DEFINITIONS})
+if(LIBXML2_FOUND)
+	target_compile_definitions(osmscout_import PRIVATE -DOSMSCOUT_IMPORT_EXPORT_SYMBOLS -DHAVE_LIB_XML ${LIBXML2_DEFINITIONS})
+else()
+	target_compile_definitions(osmscout_import PRIVATE -DOSMSCOUT_IMPORT_EXPORT_SYMBOLS)
+endif()
+
 install(TARGETS osmscout_import
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
