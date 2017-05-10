@@ -29,6 +29,10 @@
           "value": "OFF"
         },
         {
+          "name": "OSMSCOUT_BUILD_MAP_SVG",
+          "value": "OFF"
+        },
+        {
           "name": "OSMSCOUT_BUILD_BINDING_JAVA",
           "value": "OFF"
         },
@@ -67,71 +71,15 @@
           "value": "OFF"
         },
         {
+          "name": "OSMSCOUT_BUILD_MAP_SVG",
+          "value": "OFF"
+        },
+        {
           "name": "OSMSCOUT_BUILD_BINDING_JAVA",
           "value": "OFF"
         },
         {
           "name": "OSMSCOUT_BUILD_BINDING_CSHARP",
-          "value": "OFF"
-        }
-      ],
-      "buildCommandArgs": "-m"
-    },
-    {
-      "name": "x64-Debug",
-      "generator": "Visual Studio 15 2017 Win64",
-      "configurationType": "Debug",
-      "buildRoot": "${env.LOCALAPPDATA}\\CMakeBuild\\${workspaceHash}\\build\\${name}",
-      "cmakeCommandArgs": "",
-      "variables": [
-        {
-          "name": "CMAKE_INSTALL_PREFIX",
-          "value": "${workspaceRoot}/${name}"
-        },
-        {
-          "name": "MARISA_ROOT_FOLDER",
-          "value": "${workspaceRoot}\\..\\libosmscout_deps\\libmarisa"
-        },
-        {
-          "name": "PROTOBUF_ROOT_FOLDER",
-          "value": "${workspaceRoot}\\..\\libosmscout_deps\\protobuf"
-        },
-        {
-          "name": "ZLIB_ROOT",
-          "value": "${workspaceRoot}\\..\\libosmscout_deps\\zlib"
-        },
-        {
-          "name": "CMAKE_FIND_DEBUG_MODE",
-          "value": "OFF"
-        }
-      ],
-      "buildCommandArgs": "-m"
-    },
-    {
-      "name": "x64-Release",
-      "generator": "Visual Studio 15 2017 Win64",
-      "configurationType": "Release",
-      "buildRoot": "${env.LOCALAPPDATA}\\CMakeBuild\\${workspaceHash}\\build\\${name}",
-      "cmakeCommandArgs": "",
-      "variables": [
-        {
-          "name": "CMAKE_INSTALL_PREFIX",
-          "value": "${workspaceRoot}/${name}"
-        },
-        {
-          "name": "MARISA_ROOT_FOLDER",
-          "value": "${workspaceRoot}\\..\\libosmscout_deps\\libmarisa"
-        },
-        {
-          "name": "PROTOBUF_ROOT_FOLDER",
-          "value": "${workspaceRoot}\\..\\libosmscout_deps\\protobuf"
-        },
-        {
-          "name": "ZLIB_ROOT",
-          "value": "${workspaceRoot}\\..\\libosmscout_deps\\zlib"
-        },
-        {
-          "name": "CMAKE_FIND_DEBUG_MODE",
           "value": "OFF"
         }
       ],
