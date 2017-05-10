@@ -153,7 +153,7 @@ endif()
 
 if(MARISA_FOUND)
     target_include_directories(osmscout_import PRIVATE ${MARISA_INCLUDE_DIRS})
-    target_link_libraries(osmscout_import ${MARISA_LIBRARIES})
+    target_link_libraries(osmscout_import optimized ${MARISA_LIBRARIES} debug ${MARISA_LIBRARIES_DEBUG})
 endif()
 
 if(LIBXML2_FOUND)

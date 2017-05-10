@@ -172,7 +172,7 @@ create_private_config("${CMAKE_CURRENT_BINARY_DIR}/include/osmscout/private/Conf
 target_include_directories(osmscout PRIVATE include ${CMAKE_CURRENT_BINARY_DIR}/include)
 if(MARISA_FOUND)
     target_include_directories(osmscout PRIVATE ${MARISA_INCLUDE_DIRS})
-    target_link_libraries(osmscout ${MARISA_LIBRARIES})
+    target_link_libraries(osmscout optimized ${MARISA_LIBRARIES} debug ${MARISA_LIBRARIES_DEBUG})
 endif()
 target_compile_definitions(osmscout PRIVATE -DOSMSCOUT_EXPORT_SYMBOLS)
 install(TARGETS osmscout
