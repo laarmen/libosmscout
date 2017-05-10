@@ -290,28 +290,6 @@ namespace osmscout
 
 	void MapPainterDirectX::AfterPreprocessing(const StyleConfig& styleConfig, const Projection& projection, const MapParameter& parameter, const MapData& data)
 	{
-		size_t nextAreaId = 0;
-		for (const auto& area : GetAreaData()) {
-			if (area.fillStyle) {
-				std::map<FillStyle, std::string>::const_iterator entry = fillStyleNameMap.find(*area.fillStyle);
-
-				if (entry == fillStyleNameMap.end()) {
-					std::string name = "area_" + NumberToString(nextAreaId);
-					fillStyleNameMap.insert(std::make_pair(*area.fillStyle, name));
-					nextAreaId++;
-				}
-			}
-
-			if (area.borderStyle) {
-				std::map<BorderStyle, std::string>::const_iterator entry = borderStyleNameMap.find(*area.borderStyle);
-
-				if (entry == borderStyleNameMap.end()) {
-					std::string name = "area_" + NumberToString(nextAreaId);
-					borderStyleNameMap.insert(std::make_pair(*area.borderStyle, name));
-					nextAreaId++;
-				}
-			}
-		}
 	}
 
 	void MapPainterDirectX::BeforeDrawing(const StyleConfig& styleConfig, const Projection& projection, const MapParameter& parameter, const MapData& data)
@@ -599,13 +577,11 @@ namespace osmscout
 
 	void MapPainterDirectX::DrawArea(const Projection& projection, const MapParameter& parameter, const MapPainter::AreaData& area)
 	{
-		std::map<FillStyle, std::string>::const_iterator fillStyleNameEntry = fillStyleNameMap.find(*area.fillStyle);
-		std::map<BorderStyle, std::string>::const_iterator borderStyleNameEntry = borderStyleNameMap.find(*area.borderStyle);
+		FillStyle fillStyle = *area.fillStyle;
+		BorderStyle borderStyle = *area.borderStyle;
 
-		assert(fillStyleNameEntry != fillStyleNameMap.end());
-		assert(borderStyleNameEntry != borderStyleNameMap.end());
-		bool hasBorder = borderStyleNameEntry->first.GetWidth() > 0.0 && borderStyleNameEntry->first.GetColor().IsVisible();
-		double borderWidth = hasBorder ? projection.ConvertWidthToPixel(borderStyleNameEntry->first.GetWidth()) : 0.0;
+		bool hasBorder = borderStyle.GetWidth() > 0.0 && borderStyle.GetColor().IsVisible();
+		double borderWidth = hasBorder ? projection.ConvertWidthToPixel(borderStyle.GetWidth()) : 0.0;
 
 		uint64_t hash = (((uint32_t)area.transStart) << 32) | ((uint32_t)area.transEnd);
 		GeometryMap::const_iterator g = m_Geometries.find(hash);
@@ -630,8 +606,8 @@ namespace osmscout
 			}
 			g = m_Geometries.insert(std::make_pair(hash, pPathGeometry)).first;
 		}
-		m_pRenderTarget->FillGeometry(g->second, GetColorBrush(fillStyleNameEntry->first.GetFillColor()));
-		if (hasBorder) m_pRenderTarget->DrawGeometry(g->second, GetColorBrush(borderStyleNameEntry->first.GetColor()), borderWidth, GetStrokeStyle(borderStyleNameEntry->first.GetDash()));
+		m_pRenderTarget->FillGeometry(g->second, GetColorBrush(fillStyle.GetFillColor()));
+		if (hasBorder) m_pRenderTarget->DrawGeometry(g->second, GetColorBrush(borderStyle.GetColor()), borderWidth, GetStrokeStyle(borderStyle.GetDash()));
 		for (std::list<PolyData>::const_iterator c = area.clippings.begin();
 			c != area.clippings.end();
 			c++) {
@@ -660,8 +636,8 @@ namespace osmscout
 				}
 				g = m_Geometries.insert(std::make_pair(hash, pPathGeometry)).first;
 			}
-			m_pRenderTarget->FillGeometry(g->second, GetColorBrush(fillStyleNameEntry->first.GetFillColor()));
-			if (hasBorder) m_pRenderTarget->DrawGeometry(g->second, GetColorBrush(borderStyleNameEntry->first.GetColor()), borderWidth, GetStrokeStyle(borderStyleNameEntry->first.GetDash()));
+			m_pRenderTarget->FillGeometry(g->second, GetColorBrush(fillStyle.GetFillColor()));
+			if (hasBorder) m_pRenderTarget->DrawGeometry(g->second, GetColorBrush(borderStyle.GetColor()), borderWidth, GetStrokeStyle(borderStyle.GetDash()));
 		}
 	}
 
@@ -748,8 +724,6 @@ namespace osmscout
 		m_pRenderTarget = renderTarget;
 
 		Draw(projection, parameter, data);
-
-		fillStyleNameMap.clear();
 
 		return true;
 	}

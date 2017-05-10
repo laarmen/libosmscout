@@ -53,8 +53,6 @@ namespace osmscout {
 		IWICImagingFactory* m_pImagingFactory;
 		FLOAT dpiX, dpiY;
 		CoordBufferImpl<Vertex2D>* coordBuffer;
-		std::map<FillStyle, std::string> fillStyleNameMap;
-		std::map<BorderStyle, std::string> borderStyleNameMap;
 		std::map<double, double> fontHeightMap;
 		TypeConfigRef typeConfig;
 
