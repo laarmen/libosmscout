@@ -27,6 +27,14 @@
         {
           "name": "CMAKE_FIND_DEBUG_MODE",
           "value": "OFF"
+        },
+        {
+          "name": "OSMSCOUT_BUILD_BINDING_JAVA",
+          "value": "OFF"
+        },
+        {
+          "name": "OSMSCOUT_BUILD_BINDING_CSHARP",
+          "value": "OFF"
         }
       ],
       "buildCommandArgs": "-m"
@@ -56,6 +64,14 @@
         },
         {
           "name": "CMAKE_FIND_DEBUG_MODE",
+          "value": "OFF"
+        },
+        {
+          "name": "OSMSCOUT_BUILD_BINDING_JAVA",
+          "value": "OFF"
+        },
+        {
+          "name": "OSMSCOUT_BUILD_BINDING_CSHARP",
           "value": "OFF"
         }
       ],
