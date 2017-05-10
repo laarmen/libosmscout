@@ -9,6 +9,10 @@
       "cmakeCommandArgs": "",
       "variables": [
         {
+          "name": "CMAKE_INSTALL_PREFIX",
+          "value": "${workspaceRoot}/${name}"
+        },
+        {
           "name": "MARISA_ROOT_FOLDER",
           "value": "${workspaceRoot}\\..\\libosmscout_deps\\libmarisa"
         },
@@ -34,6 +38,10 @@
       "buildRoot": "${env.LOCALAPPDATA}\\CMakeBuild\\${workspaceHash}\\build\\${name}",
       "cmakeCommandArgs": "",
       "variables": [
+        {
+          "name": "CMAKE_INSTALL_PREFIX",
+          "value": "${workspaceRoot}/${name}"
+        },
         {
           "name": "MARISA_ROOT_FOLDER",
           "value": "${workspaceRoot}\\..\\libosmscout_deps\\libmarisa"
@@ -61,6 +69,10 @@
       "cmakeCommandArgs": "",
       "variables": [
         {
+          "name": "CMAKE_INSTALL_PREFIX",
+          "value": "${workspaceRoot}/${name}"
+        },
+        {
           "name": "MARISA_ROOT_FOLDER",
           "value": "${workspaceRoot}\\..\\libosmscout_deps\\libmarisa"
         },
@@ -86,6 +98,10 @@
       "buildRoot": "${env.LOCALAPPDATA}\\CMakeBuild\\${workspaceHash}\\build\\${name}",
       "cmakeCommandArgs": "",
       "variables": [
+        {
+          "name": "CMAKE_INSTALL_PREFIX",
+          "value": "${workspaceRoot}/${name}"
+        },
         {
           "name": "MARISA_ROOT_FOLDER",
           "value": "${workspaceRoot}\\..\\libosmscout_deps\\libmarisa"
