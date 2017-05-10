@@ -312,16 +312,6 @@ namespace osmscout
 				}
 			}
 		}
-		size_t nextWayId = 0;
-		for (const auto& way : GetWayData()) {
-			std::map<LineStyle, std::string>::const_iterator entry = lineStyleNameMap.find(*way.lineStyle);
-
-			if (entry == lineStyleNameMap.end()) {
-				std::string name = "way_" + NumberToString(nextWayId);
-				lineStyleNameMap.insert(std::make_pair(*way.lineStyle, name));
-				nextWayId++;
-			}
-		}
 	}
 
 	void MapPainterDirectX::BeforeDrawing(const StyleConfig& styleConfig, const Projection& projection, const MapParameter& parameter, const MapData& data)
@@ -760,7 +750,6 @@ namespace osmscout
 		Draw(projection, parameter, data);
 
 		fillStyleNameMap.clear();
-		lineStyleNameMap.clear();
 
 		return true;
 	}
