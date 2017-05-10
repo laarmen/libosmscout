@@ -48,18 +48,27 @@ static const unsigned int tileHeight = 256;
 static const double       DPI = 96.0;
 static const int          tileRingSize = 1;
 
-bool write_png(IWICBitmap *bmp, IWICImagingFactory *factory, IWICBitmapEncoder *encoder, const wchar_t* file_name)
+bool write_png(IWICBitmap *bmp, IWICImagingFactory *factory, const wchar_t* file_name)
 {
 	IWICStream *stream;
-	factory->CreateStream(&stream);
+	auto err = factory->CreateStream(&stream);
+	if (err != S_OK)
+		throw err;
 
-	stream->InitializeFromFilename(file_name, GENERIC_WRITE);
+	err = stream->InitializeFromFilename(file_name, GENERIC_WRITE);
+	if (err != S_OK)
+		throw err;
 
-	encoder->Initialize(stream, WICBitmapEncoderNoCache);
+	IWICBitmapEncoder *encoder;
+	err = factory->CreateEncoder(GUID_ContainerFormatPng, NULL, &encoder);
+	if (err != S_OK)
+		throw err;
+	err = encoder->Initialize(stream, WICBitmapEncoderNoCache);
+	if (err != S_OK)
+		throw err;
 
 	IWICBitmapFrameEncode *frameEncode;
-	encoder->CreateNewFrame(&frameEncode, NULL);
-
+	err = encoder->CreateNewFrame(&frameEncode, NULL);
 	unsigned width, height;
 	WICPixelFormatGUID format;
 
@@ -73,6 +82,8 @@ bool write_png(IWICBitmap *bmp, IWICImagingFactory *factory, IWICBitmapEncoder *
 	encoder->Commit();
 
 	SafeRelease(&frameEncode);
+	SafeRelease(&stream);
+	SafeRelease(&encoder);
 	return true;
 }
 
@@ -283,25 +294,32 @@ int main(int argc, char* argv[])
 	// TODO schopin: proper error checking.
 	IWICImagingFactory *wicFactory;
 
-	HRESULT hr = CoCreateInstance(
+	err = CoInitializeEx(NULL, COINIT_MULTITHREADED);
+	if (err != S_OK)
+		throw err;
+	err = CoCreateInstance(
 		CLSID_WICImagingFactory,
 		NULL,
 		CLSCTX_INPROC_SERVER,
 		IID_IWICImagingFactory,
 		(LPVOID*)&wicFactory
 	);
-
-	IWICBitmapEncoder *wicEncoder;
-	wicFactory->CreateEncoder(GUID_ContainerFormatPng, NULL, &wicEncoder);
+	if (err != S_OK)
+		throw err;
 
 	IWICBitmap *bmp;
-	wicFactory->CreateBitmap(
+	err = wicFactory->CreateBitmap(
 		tileWidth, tileHeight,
 		GUID_WICPixelFormat32bppPBGRA, WICBitmapCacheOnLoad,
 		&bmp);
+	if (err != S_OK)
+		throw err;
+
 	ID2D1RenderTarget *renderTarget;
 	D2D1_RENDER_TARGET_PROPERTIES props = D2D1::RenderTargetProperties();
-	directXFactory->CreateWicBitmapRenderTarget(bmp, props, &renderTarget);
+	err = directXFactory->CreateWicBitmapRenderTarget(bmp, props, &renderTarget);
+	if (err != S_OK)
+		throw err;
 
 	osmscout::MapPainterDirectX painter(styleConfig, directXFactory, writeFactory);
 
@@ -431,10 +449,14 @@ int main(int argc, char* argv[])
 					ringTiles,
 					data);
 
+				renderTarget->BeginDraw();
 				painter.DrawMap(projection,
 					drawParameter,
 					data,
 					renderTarget);
+				err = renderTarget->EndDraw();
+				if (err != S_OK)
+					throw err;
 
 				timer.Stop();
 
@@ -447,7 +469,7 @@ int main(int argc, char* argv[])
 				std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
 				std::wstring output = converter.from_bytes(osmscout::NumberToString(level)) + L"_" + converter.from_bytes(osmscout::NumberToString(x)) + L"_" + converter.from_bytes(osmscout::NumberToString(y)) + L".png";
 
-				write_png(bmp, wicFactory, wicEncoder, output.c_str());
+				write_png(bmp, wicFactory, output.c_str());
 			}
 		}
 
@@ -462,18 +484,19 @@ int main(int argc, char* argv[])
 		write_ppm(rbuf, output.c_str());
 		*/
 
-		SafeRelease(&renderTarget);
-		SafeRelease(&bmp);
-		SafeRelease(&wicFactory);
-		SafeRelease(&writeFactory);
-		SafeRelease(&directXFactory);
-
 		std::cout << "=> Time: ";
 		std::cout << "total: " << totalTime << " msec ";
 		std::cout << "min: " << minTime << " msec ";
 		std::cout << "avg: " << totalTime / (xTileCount*yTileCount) << " msec ";
 		std::cout << "max: " << maxTime << " msec" << std::endl;
 	}
+
+	SafeRelease(&renderTarget);
+	SafeRelease(&bmp);
+	SafeRelease(&wicFactory);
+	SafeRelease(&writeFactory);
+	SafeRelease(&directXFactory);
+
 
 	database->Close();
 
