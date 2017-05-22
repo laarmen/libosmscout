@@ -283,6 +283,8 @@ int main(int argc, char* argv[])
 	// of other than the current tile, too.
 	drawParameter.SetDropNotVisiblePointLabels(false);
 
+	drawParameter.SetRenderSeaLand(true);
+
 	searchParameter.SetUseLowZoomOptimization(true);
 	searchParameter.SetMaximumAreaLevel(3);
 
@@ -452,6 +454,7 @@ int main(int argc, char* argv[])
 					typeDefinition,
 					ringTiles,
 					data);
+				mapService->GetGroundTiles(projection, data.groundTiles);
 
 				renderTarget->BeginDraw();
 				painter.DrawMap(projection,
