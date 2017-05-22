@@ -765,7 +765,7 @@ namespace osmscout {
    * cached.
    */
   void MapService::LookupTiles(const Projection& projection,
-                               std::list<TileRef>& tiles) const
+                               std::vector<TileRef>& tiles) const
   {
     std::lock_guard<std::mutex> lock(stateMutex);
 
@@ -792,7 +792,7 @@ namespace osmscout {
    */
   void MapService::LookupTiles(const Magnification& magnification,
                                const GeoBox& boundingBox,
-                               std::list<TileRef>& tiles) const
+                               std::vector<TileRef>& tiles) const
   {
     std::lock_guard<std::mutex> lock(stateMutex);
 
@@ -833,7 +833,7 @@ namespace osmscout {
    */
   bool MapService::LoadMissingTileDataStyleSheet(const AreaSearchParameter& parameter,
                                                  const StyleConfig& styleConfig,
-                                                 std::list<TileRef>& tiles,
+                                                 std::vector<TileRef>& tiles,
                                                  bool async) const
   {
     std::lock_guard<std::mutex>  lock(stateMutex);
@@ -843,7 +843,7 @@ namespace osmscout {
     TypeDefinitionRef            typeDefinition;
     Magnification                typeDefinitionMagnification;
 
-    std::list<std::future<bool>> results;
+    std::vector<std::future<bool>> results;
 
     for (auto& tile : tiles) {
       GeoBox          tileBoundingBox(tile->GetBoundingBox());
@@ -953,14 +953,14 @@ namespace osmscout {
   bool MapService::LoadMissingTileDataTypeDefinition(const AreaSearchParameter& parameter,
                                                      const Magnification& magnification,
                                                      const TypeDefinition& typeDefinition,
-                                                     std::list<TileRef>& tiles,
+                                                     std::vector<TileRef>& tiles,
                                                      bool async) const
   {
     std::lock_guard<std::mutex>  lock(stateMutex);
 
     StopClock                    overallTime;
 
-    std::list<std::future<bool>> results;
+    std::vector<std::future<bool>> results;
 
     for (auto& tile : tiles) {
       GeoBox tileBoundingBox(tile->GetBoundingBox());
@@ -1061,7 +1061,7 @@ namespace osmscout {
    */
   bool MapService::LoadMissingTileData(const AreaSearchParameter& parameter,
                                        const StyleConfig& styleConfig,
-                                       std::list<TileRef>& tiles) const
+                                       std::vector<TileRef>& tiles) const
   {
     return LoadMissingTileDataStyleSheet(parameter,styleConfig,tiles,false);
   }
@@ -1076,7 +1076,7 @@ namespace osmscout {
    */
   bool MapService::LoadMissingTileDataAsync(const AreaSearchParameter& parameter,
                                             const StyleConfig& styleConfig,
-                                            std::list<TileRef>& tiles) const
+                                            std::vector<TileRef>& tiles) const
   {
     auto result=std::async(std::launch::async,
                            &MapService::LoadMissingTileDataStyleSheet,this,
@@ -1091,7 +1091,7 @@ namespace osmscout {
   bool MapService::LoadMissingTileData(const AreaSearchParameter& parameter,
                                        const Magnification& magnification,
                                        const TypeDefinition& typeDefinition,
-                                       std::list<TileRef>& tiles) const
+                                       std::vector<TileRef>& tiles) const
   {
     return LoadMissingTileDataTypeDefinition(parameter,
                                              magnification,
@@ -1103,7 +1103,7 @@ namespace osmscout {
   bool MapService::LoadMissingTileDataAsync(const AreaSearchParameter& parameter,
                                             const Magnification& magnification,
                                             const TypeDefinition& typeDefinition,
-                                            std::list<TileRef>& tiles) const
+                                            std::vector<TileRef>& tiles) const
   {
     auto result=std::async(std::launch::async,
                            &MapService::LoadMissingTileDataTypeDefinition,this,
@@ -1119,7 +1119,7 @@ namespace osmscout {
   /**
    * Convert the data hold by the given tiles to the given MapData class instance.
    */
-  void MapService::AddTileDataToMapData(std::list<TileRef>& tiles,
+  void MapService::AddTileDataToMapData(std::vector<TileRef>& tiles,
                                         MapData& data) const
   {
     // TODO: Use a set and higher level fill functions
@@ -1197,7 +1197,7 @@ namespace osmscout {
   /**
    * Convert the data hold by the given tiles to the given MapData class instance.
    */
-  void MapService::AddTileDataToMapData(std::list<TileRef>& tiles,
+  void MapService::AddTileDataToMapData(std::vector<TileRef>& tiles,
                                         const TypeDefinition& typeDefinition,
                                         MapData& data) const
   {
@@ -1297,7 +1297,7 @@ namespace osmscout {
    *    False, if there was an error, else true.
    */
   bool MapService::GetGroundTiles(const Projection& projection,
-                                  std::list<GroundTile>& tiles) const
+                                  std::vector<GroundTile>& tiles) const
   {
     GeoBox boundingBox;
 
@@ -1324,7 +1324,7 @@ namespace osmscout {
    */
   bool MapService::GetGroundTiles(const GeoBox& boundingBox,
                                   const Magnification& magnification,
-                                  std::list<GroundTile>& tiles) const
+                                  std::vector<GroundTile>& tiles) const
   {
     WaterIndexRef waterIndex=database->GetWaterIndex();
 

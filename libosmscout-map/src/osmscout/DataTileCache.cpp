@@ -153,7 +153,7 @@ namespace osmscout {
    */
   void DataTileCache::GetTilesForBoundingBox(const Magnification& magnification,
                                               const GeoBox& boundingBox,
-                                              std::list<TileRef>& tiles) const
+                                              std::vector<TileRef>& tiles) const
   {
     tiles.clear();
 
@@ -166,6 +166,8 @@ namespace osmscout {
 
     uint32_t cx2=(uint32_t)floor((boundingBox.GetMaxLon()+180.0)/cellDimension[level].width);
     uint32_t cy2=(uint32_t)floor((boundingBox.GetMaxLat()+90.0)/cellDimension[level].height);
+
+    tiles.reserve((cx2 - cx1 + 1)*(cy2 - cy1 + 1));
 
     //std::cout << "Tile bounding box: " << cx1 << "," << cy1 << " - "  << cx2 << "," << cy2 << std::endl;
 

@@ -20,7 +20,6 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
 */
 
-#include <list>
 #include <memory>
 #include <thread>
 #include <vector>
@@ -215,13 +214,13 @@ namespace osmscout {
 
     bool LoadMissingTileDataStyleSheet(const AreaSearchParameter& parameter,
                                        const StyleConfig& styleConfig,
-                                       std::list<TileRef>& tiles,
+                                       std::vector<TileRef>& tiles,
                                        bool async) const;
 
     bool LoadMissingTileDataTypeDefinition(const AreaSearchParameter& parameter,
                                            const Magnification& magnification,
                                            const TypeDefinition& typeDefinition,
-                                           std::list<TileRef>& tiles,
+                                           std::vector<TileRef>& tiles,
                                            bool async) const;
 
   public:
@@ -237,44 +236,44 @@ namespace osmscout {
 
     void LookupTiles(const Magnification& magnification,
                      const GeoBox& boundingBox,
-                     std::list<TileRef>& tiles) const;
+                     std::vector<TileRef>& tiles) const;
 
     void LookupTiles(const Projection& projection,
-                     std::list<TileRef>& tiles) const;
+                     std::vector<TileRef>& tiles) const;
 
     TileRef LookupTile(const TileId& id) const;
 
     bool LoadMissingTileData(const AreaSearchParameter& parameter,
                              const StyleConfig& styleConfig,
-                             std::list<TileRef>& tiles) const;
+                             std::vector<TileRef>& tiles) const;
 
     bool LoadMissingTileDataAsync(const AreaSearchParameter& parameter,
                                   const StyleConfig& styleConfig,
-                                  std::list<TileRef>& tiles) const;
+                                  std::vector<TileRef>& tiles) const;
 
     bool LoadMissingTileData(const AreaSearchParameter& parameter,
                              const Magnification& magnification,
                              const TypeDefinition& typeDefinition,
-                             std::list<TileRef>& tiles) const;
+                             std::vector<TileRef>& tiles) const;
 
     bool LoadMissingTileDataAsync(const AreaSearchParameter& parameter,
                                   const Magnification& magnification,
                                   const TypeDefinition& typeDefinition,
-                                  std::list<TileRef>& tiles) const;
+                                  std::vector<TileRef>& tiles) const;
 
-    void AddTileDataToMapData(std::list<TileRef>& tiles,
+    void AddTileDataToMapData(std::vector<TileRef>& tiles,
                               MapData& data) const;
 
-    void AddTileDataToMapData(std::list<TileRef>& tiles,
+    void AddTileDataToMapData(std::vector<TileRef>& tiles,
                               const TypeDefinition& typeDefinition,
                               MapData& data) const;
 
     bool GetGroundTiles(const Projection& projection,
-                        std::list<GroundTile>& tiles) const;
+                        std::vector<GroundTile>& tiles) const;
 
     bool GetGroundTiles(const GeoBox& boundingBox,
                         const Magnification& magnification,
-                        std::list<GroundTile>& tiles) const;
+                        std::vector<GroundTile>& tiles) const;
 
     CallbackId RegisterTileStateCallback(TileStateCallback callback);
     void DeregisterTileStateCallback(CallbackId callbackId);

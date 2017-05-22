@@ -60,10 +60,10 @@ namespace osmscout {
     std::vector<NodeRef>  nodes;       //!< Nodes as retrieved from database
     std::vector<AreaRef>  areas;       //!< Areas as retrieved from database
     std::vector<WayRef>   ways;        //!< Ways as retrieved from database
-    std::list<NodeRef>    poiNodes;    //!< List of manually added nodes (not managed or changed by the database)
-    std::list<AreaRef>    poiAreas;    //!< List of manually added areas (not managed or changed by the database)
-    std::list<WayRef>     poiWays;     //!< List of manually added ways (not managed or changed by the database)
-    std::list<GroundTile> groundTiles; //!< List of ground tiles (optional)
+    std::vector<NodeRef>    poiNodes;    //!< List of manually added nodes (not managed or changed by the database)
+    std::vector<AreaRef>    poiAreas;    //!< List of manually added areas (not managed or changed by the database)
+    std::vector<WayRef>     poiWays;     //!< List of manually added ways (not managed or changed by the database)
+    std::vector<GroundTile> groundTiles; //!< List of ground tiles (optional)
 
   public:
     void ClearDBData();

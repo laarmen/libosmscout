@@ -86,7 +86,7 @@ private:
 	osmscout::MapPainterDirectX*	m_Painter;
 	osmscout::AreaSearchParameter	m_SearchParameter;
 	osmscout::StyleConfigRef		m_StyleConfig;
-	std::list<osmscout::TileRef>	m_Tiles;
+	std::vector<osmscout::TileRef>	m_Tiles;
 
 	std::string						m_szMap;
 	std::string						m_szStyle;
