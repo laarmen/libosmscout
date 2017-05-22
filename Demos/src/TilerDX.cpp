@@ -77,8 +77,12 @@ bool write_png(IWICBitmap *bmp, IWICImagingFactory *factory, const wchar_t* file
 	frameEncode->Initialize(NULL);
 	frameEncode->SetSize(width, height);
 	frameEncode->SetPixelFormat(&format);
-	frameEncode->WriteSource(bmp, NULL);
-	frameEncode->Commit();
+	err = frameEncode->WriteSource(bmp, NULL);
+	if (err != S_OK)
+		throw err;
+	err = frameEncode->Commit();
+	if (err != S_OK)
+		throw err;
 	encoder->Commit();
 
 	SafeRelease(&frameEncode);
