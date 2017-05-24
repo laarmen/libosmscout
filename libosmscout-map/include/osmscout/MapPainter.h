@@ -20,8 +20,8 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
 */
 
-#include <list>
 #include <string>
+#include <vector>
 
 #include <osmscout/private/MapImportExport.h>
 
@@ -174,7 +174,7 @@ namespace osmscout {
       GeoBox                   boundingBox;     //!< Bounding box of the area
       size_t                   transStart;      //!< Start of coordinates in transformation buffer
       size_t                   transEnd;        //!< End of coordinates in transformation buffer
-      std::list<PolyData>      clippings;       //!< Clipping polygons to be used during drawing of this area
+      std::vector<PolyData>    clippings;       //!< Clipping polygons to be used during drawing of this area
     };
 
     struct OSMSCOUT_MAP_API LabelLayoutData
@@ -197,9 +197,9 @@ namespace osmscout {
 
     double                       errorTolerancePixel;
 
-    std::list<AreaData>          areaData;
-    std::list<WayData>           wayData;
-    std::list<WayPathData>       wayPathData;
+    std::vector<AreaData>        areaData;
+    std::vector<WayData>         wayData;
+    std::vector<WayPathData>     wayPathData;
 
     /**
       Temporary data structures for intelligent label positioning
@@ -436,12 +436,12 @@ namespace osmscout {
     }
     //@}
 
-    inline const std::list<WayData>& GetWayData() const
+    inline const std::vector<WayData>& GetWayData() const
     {
       return wayData;
     }
 
-    inline const std::list<AreaData>& GetAreaData() const
+    inline const std::vector<AreaData>& GetAreaData() const
     {
       return areaData;
     }

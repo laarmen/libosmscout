@@ -162,6 +162,7 @@ namespace osmscout
 		std::string enc = text;
 #endif
 		FLOAT size = fontSize * 20.0f * text.length();
+        std::cerr << "Writing label \"" << text << "\" (" << fontSize << ")" << std::endl;
 		IDWriteTextFormat* tf = GetFont(projection, parameter, fontSize);
 		IDWriteTextLayout* pDWriteTextLayout = NULL;
 		HRESULT hr = m_pWriteFactory->CreateTextLayout(
@@ -260,6 +261,7 @@ namespace osmscout
 		fontSize = fontSize * projection.ConvertWidthToPixel(parameter.GetFontSize());
 
 		uint32_t hash = GetFontHash(parameter.GetFontName().c_str(), fontSize);
+        std::cout << "Hash for " << parameter.GetFontName() << " " << fontSize << ": " << hash << std::endl;
 		f = m_Fonts.find(hash);
 
 		if (f != m_Fonts.end()) {
@@ -588,7 +590,7 @@ namespace osmscout
 		if (hasBorder) m_pRenderTarget->DrawGeometry(pPathGeometry, GetColorBrush(borderStyle->GetColor()), borderWidth, GetStrokeStyle(borderStyle->GetDash()));
 		pPathGeometry->Release();
 
-		for (std::list<PolyData>::const_iterator c = area.clippings.begin();
+		for (std::vector<PolyData>::const_iterator c = area.clippings.begin();
 			c != area.clippings.end();
 			c++) {
 			const PolyData    &data = *c;

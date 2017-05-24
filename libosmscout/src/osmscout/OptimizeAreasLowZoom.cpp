@@ -286,13 +286,13 @@ namespace osmscout
     loadedAreaTypes.Clear();
 
     try {
-      for (std::map<TypeInfoRef,std::list<TypeData> >::const_iterator type=areaTypesData.begin();
+      for (std::map<TypeInfoRef,std::vector<TypeData> >::const_iterator type=areaTypesData.begin();
            type!=areaTypesData.end();
            ++type) {
         if (areaTypes.IsSet(type->first)) {
-          std::list<TypeData>::const_iterator match=type->second.end();
+          std::vector<TypeData>::const_iterator match=type->second.end();
 
-          for (std::list<TypeData>::const_iterator typeData=type->second.begin();
+          for (std::vector<TypeData>::const_iterator typeData=type->second.begin();
                typeData!=type->second.end();
                ++typeData) {
             if (typeData->optLevel==magnification.GetLevel()) {

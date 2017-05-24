@@ -286,13 +286,13 @@ namespace osmscout
     loadedWayTypes.Clear();
 
     try {
-      for (std::map<TypeInfoRef,std::list<TypeData> >::const_iterator type=wayTypesData.begin();
+      for (std::map<TypeInfoRef,std::vector<TypeData> >::const_iterator type=wayTypesData.begin();
            type!=wayTypesData.end();
            ++type) {
         if (wayTypes.IsSet(type->first)) {
-          std::list<TypeData>::const_iterator match=type->second.end();
+          std::vector<TypeData>::const_iterator match=type->second.end();
 
-          for (std::list<TypeData>::const_iterator typeData=type->second.begin();
+          for (std::vector<TypeData>::const_iterator typeData=type->second.begin();
                typeData!=type->second.end();
                ++typeData) {
             if (typeData->optLevel==magnification.GetLevel()) {

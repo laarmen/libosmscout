@@ -69,7 +69,7 @@ namespace osmscout {
     mutable FileScanner                        scanner;       //!< File stream to the data file
 
     double                                     magnification; //!< Magnification, up to which we support optimization
-    std::map<TypeInfoRef,std::list<TypeData> > wayTypesData;  //!< Index information for all way types
+    std::map<TypeInfoRef,std::vector<TypeData> > wayTypesData;  //!< Index information for all way types
 
     mutable std::mutex                         lookupMutex;
 

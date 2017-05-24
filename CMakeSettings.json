@@ -33,6 +33,18 @@
           "value": "OFF"
         },
         {
+          "name": "OSMSCOUT_BUILD_IMPORT",
+          "value": "OFF"
+        },
+        {
+          "name": "OSMSCOUT_BUILD_TOOL_DUMP_DATA",
+          "value": "OFF"
+        },
+        {
+          "name": "OSMSCOUT_BUILD_TOOL_IMPORT",
+          "value": "OFF"
+        },
+        {
           "name": "OSMSCOUT_BUILD_BINDING_JAVA",
           "value": "OFF"
         },
